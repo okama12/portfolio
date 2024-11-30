@@ -5,7 +5,7 @@ import WhatsAppButton from './WhatsAppButton';
 
 function App() {
   return (
-    <Router>
+    <Router  basename="/portfolio.github.io">
       <div className="relative">
         {/* Main Content */}
         <Routes>
