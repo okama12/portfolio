@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: 'Fira Code', monospace;
+  }
+  
+  .bold {
+    font-weight: 700; /* Bold Fira Code */
+  }
+  
+  .normal {
+    font-weight: 400; /* Regular Fira Code */
+  }
+  
