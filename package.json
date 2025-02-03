@@ -11,7 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-"homepage": "https://rashidiokama.com/portfolio.github.io",
+"homepage": "https://rashidiokama.com/portfolio",
   "dependencies": {
     "lucide-react": "^0.462.0",
     "react": "^18.3.1",
