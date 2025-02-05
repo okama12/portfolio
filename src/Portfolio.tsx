@@ -3,10 +3,17 @@ import './index.css';
 import WhatsAppButton from './WhatsAppButton';
 import { Youtube, Github, Menu, X, ArrowRight, Briefcase, Code, BookOpen, Mail, User, ExternalLink } from 'lucide-react';
 
+
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [mousePosition, setMousePosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 }); // Type annotation for mousePosition
+import fallbackImage from '/images/project-placeholder.jpg';
+
+const Portfolio = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mousePosition, setMousePosition] = useState<{ x: number, y: number }>({ x: 0, y: 0 });
+
   const [scrollProgress, setScrollProgress] = useState(0);
 
  // Sample project data
@@ -60,11 +67,15 @@ const experience = [
 ];
 
 useEffect(() => {
+<<<<<<< HEAD
   const timer = setTimeout(() => {
     setLoading(false);
   }, 1000);
 
   const handleMouseMove = (e: MouseEvent) => {  // Fixed the event type here
+=======
+  const handleMouseMove = (e: MouseEvent) => {
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
     setMousePosition({ x: e.clientX, y: e.clientY });
   };
 
@@ -79,12 +90,16 @@ useEffect(() => {
   window.addEventListener('scroll', handleScroll);
 
   return () => {
+<<<<<<< HEAD
     clearTimeout(timer);
+=======
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
     window.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('scroll', handleScroll);
   };
 }, []);
 
+<<<<<<< HEAD
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
@@ -97,6 +112,95 @@ useEffect(() => {
 
     
     <div className="min-h-screen relative bg-gradient-to-b from-white via-white to-black font-mono overflow-hidden">
+=======
+// Add error handling utility
+const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+  e.currentTarget.src = fallbackImage;
+  e.currentTarget.onerror = null; // Prevent infinite loop if fallback also fails
+};
+
+// Update the Projects section with error handling
+const ProjectCard = ({ project, index }: { project: any, index: number }) => {
+  const [videoError, setVideoError] = useState(false);
+  const imageUrl = `/images/projects/${project.title.replace(/\s+/g, '-').toLowerCase()}.jpg`;
+  const videoUrl = `/videos/projects/${project.title.replace(/\s+/g, '-').toLowerCase()}.mp4`;
+
+  return (
+    <div
+      className={`group backdrop-blur-sm bg-white/5 p-6 rounded-lg border border-gray-200 hover:border-yellow-400 transition-all duration-300 ${
+        index >= 4 ? 'hidden md:block' : ''
+      }`}
+    >
+      {/* Project Thumbnail */}
+      <div className="relative mb-4">
+        <img
+          src={imageUrl}
+          alt={project.title}
+          onError={handleImageError}
+          className="w-full h-48 object-cover rounded-lg"
+          loading="lazy"
+          width="600"
+          height="300"
+        />
+        {!videoError && (
+          <video
+            src={videoUrl}
+            autoPlay
+            loop
+            muted
+            preload="none"
+            width="600"
+            height="300"
+            onError={() => setVideoError(true)}
+            className="absolute inset-0 w-full h-48 object-cover rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        )}
+      </div>
+
+      {/* Rest of the project card content */}
+      <h3 className="text-xl font-bold mb-2">{project.title}</h3>
+      <p className="text-gray-600 mb-4">{project.description}</p>
+      <div className="flex flex-wrap gap-2 mb-4">
+        {project.tags.map((tag: string) => (
+          <span key={tag} className="bg-gray-100 px-2 py-1 rounded text-sm">
+            {tag}
+          </span>
+        ))}
+      </div>
+      <div className="flex space-x-4">
+        {project.github && (
+          <a
+            href={project.github}
+            className="flex items-center text-sm hover:text-yellow-400 transition-all duration-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Github className="w-4 h-4 mr-1" /> Code
+          </a>
+        )}
+        {project.demo && (
+          <a
+            href={project.demo}
+            className="flex items-center text-sm hover:text-yellow-400 transition-all duration-300"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLink className="w-4 h-4 mr-1" /> Demo
+          </a>
+        )}
+      </div>
+    </div>
+  );
+};
+
+  return (
+    <div className="min-h-screen relative bg-gradient-to-b from-white via-white to-black font-mono overflow-hidden">
+      {/* Add skip link */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
       {/* Mouse follower */}
       <div 
         className="fixed w-64 h-64 rounded-full bg-yellow-400 opacity-10 pointer-events-none blur-3xl transition-transform duration-500 ease-out"
@@ -121,8 +225,16 @@ useEffect(() => {
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden"
+<<<<<<< HEAD
             >
               {isMenuOpen ? <X /> : <Menu />}
+=======
+              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+            >
+              {isMenuOpen ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
             </button>
 
             {/* Desktop navigation */}
@@ -137,7 +249,16 @@ useEffect(() => {
         </div>
 
         {/* Mobile navigation */}
+<<<<<<< HEAD
         <div className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-white border-b border-gray-200`}>
+=======
+        <div 
+          id="mobile-menu"
+          className={`md:hidden ${isMenuOpen ? 'block' : 'hidden'} bg-white border-b border-gray-200`}
+          role="navigation"
+          aria-label="Mobile navigation"
+        >
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
           <div className="px-8 py-4 space-y-4">
             <a href="#about" className="block hover:text-yellow-400 transition-all duration-300">About</a>
             <a href="#skills" className="block hover:text-yellow-400 transition-all duration-300">Skills</a>
@@ -148,6 +269,7 @@ useEffect(() => {
         </div>
       </nav>
 
+<<<<<<< HEAD
       {/* Hero Section */}
       <section className="pt-32 px-8 pb-16 max-w-4xl mx-auto min-h-screen flex items-center">
         <div className="space-y-8">
@@ -225,6 +347,90 @@ useEffect(() => {
 
       {/* Skills Section */}
       <section className="px-8 py-16 bg-black text-white" id="skills">
+=======
+      {/* Add id to main content */}
+      <main id="main-content" tabIndex={-1}>
+        {/* Hero Section */}
+        <section className="pt-32 px-8 pb-16 max-w-4xl mx-auto min-h-screen flex items-center">
+          <div className="space-y-8">
+            <div className="space-y-4">
+              <div className="bg-yellow-400 inline-block px-4 py-2 transform -rotate-1">
+                <h1 className="text-4xl md:text-6xl font-bold">Hey, I'm<br />Rashid Okama.</h1>
+              </div>
+              
+              <div className="bg-yellow-400 inline-block px-4 py-2 transform rotate-1">
+                <p className="text-2xl md:text-4xl font-bold">
+                Empowering Businesses with Cutting-Edge Tech Solutions  
+                </p>
+              </div>
+            </div>
+
+            <div className="space-y-4 text-lg">
+              <p>I'm a <span className="underline decoration-yellow-400">Software Developer</span> and <span className="underline decoration-yellow-400">IoT Enthusiast</span> based in Tanzania 🇹🇿.</p>
+              
+              <p>
+              I specialize in creating impactful solutions for <span className="underline decoration-yellow-400">businesses</span>  and <span className="underline decoration-yellow-400">individuals</span>.
+              </p>
+              
+              <p>
+              My expertise spans <span className="underline decoration-yellow-400">web</span>  and <span className="underline decoration-yellow-400">mobile development</span>,
+              <span className="underline decoration-yellow-400">backend systems</span>,<span className="underline decoration-yellow-400">IoT solutions</span>, and more.
+              </p>
+            </div>
+
+            <div className="flex space-x-4">
+              <a 
+                href="#projects" 
+                className="bg-black text-white px-6 py-3 rounded flex items-center hover:bg-yellow-400 hover:text-black transition-all duration-300"
+              >
+                View My Work <ArrowRight className="ml-2" />
+              </a>
+              <a 
+                href="#contact" 
+                className="border border-black px-6 py-3 rounded flex items-center hover:bg-yellow-400 hover:border-yellow-400 transition-all duration-300"
+              >
+                Get In Touch
+              </a>
+            </div>
+          </div>
+        </section>
+
+       {/* About Section */}
+       <section className="px-8 py-16 max-w-4xl mx-auto" id="about">
+          <div className="bg-yellow-400 text-black inline-block px-4 py-2 mb-8 text-xl font-bold transform -rotate-1 hover:rotate-2 transition-all duration-300">
+            <User className="inline-block mr-2" /> About Me
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="space-y-4">
+              <h2 className="text-2xl font-bold">Software Developer with a passion for building scalable applications</h2>
+              <p className="text-lg">Tech enthusiast with expertise in mobile development, IoT, web development, and API integration. Dedicated to delivering scalable, secure, and user-focused applications using modern tools.</p>
+              <p className="text-lg"><span className="underline decoration-yellow-400">You can read more about me here</span></p>
+              <div className="flex space-x-4">
+                <a href="#" className="bg-black text-white px-4 py-2 rounded hover:bg-yellow-400 hover:text-black transition-all duration-300">
+                  Download CV
+                </a>
+                <a href="#contact" className="border border-black px-4 py-2 rounded hover:bg-yellow-400 hover:border-yellow-400 transition-all duration-300">
+                  Contact Me
+                </a>
+              </div>
+            </div>
+            <div className="relative">
+              <img 
+                src="/images/okama.jpg" 
+                alt="Profile" 
+                loading="lazy"
+                width="400"
+                height="400"
+                className="rounded-lg shadow-xl transform hover:rotate-3 transition-all duration-300 w-full h-auto"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* Skills Section */}
+        <section className="px-8 py-16 bg-black text-white" id="skills">
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
   <div className="max-w-4xl mx-auto">
     <div className="bg-yellow-400 text-black inline-block px-4 py-2 mb-8 text-xl font-bold transform -rotate-1 hover:rotate-2 transition-all duration-300">
       <Code className="inline-block mr-2" /> Technical Skills
@@ -254,14 +460,20 @@ useEffect(() => {
 </section>
 
 
+<<<<<<< HEAD
       {/* Projects Section */}
 <section className="px-8 py-16" id="projects">
+=======
+        {/* Projects Section */}
+<section className="min-h-[600px] px-8 py-16" id="projects">
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
   <div className="max-w-4xl mx-auto">
     <div className="bg-yellow-400 text-black inline-block px-4 py-2 mb-8 text-xl font-bold transform -rotate-1 hover:rotate-2 transition-all duration-300">
       <Briefcase className="inline-block mr-2" /> Featured Projects
     </div>
 
     <div className="grid md:grid-cols-2 gap-8">
+<<<<<<< HEAD
       {/* Render up to 4 projects for mobile and up to 6 for desktop */}
       {projects.slice(0, 6).map((project, index) => (
         <div
@@ -310,6 +522,10 @@ useEffect(() => {
             </a>
           </div>
         </div>
+=======
+      {projects.slice(0, 6).map((project, index) => (
+        <ProjectCard key={project.title} project={project} index={index} />
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
       ))}
     </div>
 
@@ -326,6 +542,7 @@ useEffect(() => {
 </section>
 
 
+<<<<<<< HEAD
       {/* Experience Section */}
       <section className="px-8 py-16 bg-black text-white" id="experience">
         <div className="max-w-4xl mx-auto">
@@ -411,6 +628,98 @@ useEffect(() => {
           <a href="#" className="hover:text-yellow-400 transition-all duration-300">Privacy Policy</a>
         </div>
       </footer>
+=======
+        {/* Experience Section */}
+        <section className="px-8 py-16 bg-black text-white" id="experience">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-yellow-400 text-black inline-block px-4 py-2 mb-8 text-xl font-bold transform -rotate-1 hover:rotate-2 transition-all duration-300">
+              <BookOpen className="inline-block mr-2" /> Work Experience
+            </div>
+            
+            <div className="space-y-8">
+              {experience.map((job, index) => (
+                <div 
+                  key={index}
+                  className="backdrop-blur-sm bg-white/5 p-6 rounded-lg border border-gray-700 hover:border-yellow-400 transition-all duration-300"
+                >
+                  <h3 className="text-xl font-bold mb-1">{job.position}</h3>
+                  <div className="flex justify-between items-center mb-4">
+                    <span className="text-yellow-400">{job.company}</span>
+                    <span className="text-sm text-gray-400">{job.period}</span>
+                  </div>
+                  <p className="text-gray-300">{job.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Contact Section */}
+        <section className="px-8 py-16" id="contact">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-yellow-400 text-black inline-block px-4 py-2 mb-8 text-xl font-bold transform -rotate-1 hover:rotate-2 transition-all duration-300">
+              <Mail className="inline-block mr-2" /> Get In Touch
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="space-y-4">
+                <h2 className="text-2xl font-bold">Let's Work Together</h2>
+                <p className="text-lg">I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.</p>
+                <div className="space-y-2">
+                  <p className="flex items-center">
+                    <Mail className="w-5 h-5 mr-2" /> rashidokama@gmail.com
+                  </p>
+                  <p className="flex items-center">
+                    <Github className="w-5 h-5 mr-2" /> github.com/okama12
+                  </p>
+                </div>
+              </div>
+              <form className="space-y-4">
+                <input 
+                  type="text" 
+                  placeholder="Your Name" 
+                  className="w-full p-2 border border-gray-300 rounded focus:border-yellow-400 focus:outline-none transition-all duration-300"
+                />
+                <input 
+                  type="email" 
+                  placeholder="Your Email" 
+                  className="w-full p-2 border border-gray-300 rounded focus:border-yellow-400 focus:outline-none transition-all duration-300"
+                />
+                <textarea 
+                  placeholder="Your Message" 
+                  rows={4}
+                  className="w-full p-2 border border-gray-300 rounded focus:border-yellow-400 focus:outline-none transition-all duration-300"
+                />
+                <button className="bg-black text-white px-6 py-2 rounded hover:bg-yellow-400 hover:text-black transition-all duration-300">
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
+        {/* WhatsApp Floating Button */}
+        <WhatsAppButton 
+          phoneNumber="+1234567890" 
+          message="Hi, I need more information!" 
+          aria-label="Contact via WhatsApp"
+        />
+
+        {/* Footer remains the same... */}
+        <footer className="px-8 py-12 text-center bg-black text-white">
+          <div className="flex justify-center space-x-4 mb-4">
+            <Youtube className="w-8 h-8 hover:text-yellow-400 transform hover:scale-125 transition-all duration-300 cursor-pointer" />
+            <Github className="w-8 h-8 hover:text-yellow-400 transform hover:scale-125 transition-all duration-300 cursor-pointer" />
+          </div>
+          <p className="mb-4">© 2024 - Rashid Okama</p>
+          <div className="space-x-4">
+            <a href="#" className="hover:text-yellow-400 transition-all duration-300">Terms</a>
+            <span>×</span>
+            <a href="#" className="hover:text-yellow-400 transition-all duration-300">Privacy Policy</a>
+          </div>
+        </footer>
+      </main>
+>>>>>>> 0e5f2e3 (perfomance optimazation1)
     </div>
   );
 };

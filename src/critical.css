@@ -1,0 +1,14 @@
+/* Critical CSS that should load first */
+:root {
+  --yellow-400: #facc15;
+}
+
+body {
+  margin: 0;
+  font-family: monospace;
+}
+
+.critical-content {
+  min-height: 100vh;
+  background: linear-gradient(to bottom, #ffffff, #ffffff, #000000);
+} 
